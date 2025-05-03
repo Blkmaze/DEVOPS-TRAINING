@@ -1,0 +1,8 @@
+# Add before the "Build and Push Flask App" step:
+- name: Test Flask App (basic curl)
+  run: |
+    docker build -t test-flask-app ./app
+    docker run -d -p 5000:5000 --name flask-test test-flask-app
+    sleep 5
+    curl -f http://localhost:5000 || (echo "Health check failed!" && exit 1)
+    docker stop flask-test

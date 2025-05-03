@@ -1,0 +1,12 @@
+- name: Deploy via SSH
+  uses: appleboy/ssh-action@v0.1.10
+  with:
+    host: ${{ secrets.SSH_HOST }}
+    username: ${{ secrets.SSH_USER }}
+    key: ${{ secrets.SSH_PRIVATE_KEY }}
+    script: |
+      cd /home/ubuntu/DEVOPS-TRAINING
+      git pull origin main
+      docker-compose down
+      docker-compose pull
+      docker-compose up -d
